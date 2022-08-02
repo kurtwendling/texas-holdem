@@ -34,7 +34,6 @@ export class Hand {
                 sameValues.push({value:v,cards:filteredValues});
             }
         }
-        
         //console.log('sameValues', sameValues);
 
         let sameSuites = [];
@@ -44,29 +43,28 @@ export class Hand {
                 sameSuites.push({suite:s,cards:filteredSuites});
             }
         }
-
         //console.log('sameSuites', sameSuites);
 
         let sf = sameSuites.filter(s => s.cards.length >= 5);
         let sfEval = this.straightEval(sf.cards);
-        console.log('sfEval',sfEval);
+        //console.log('sfEval',sfEval);
         if (sfEval.isStraight) {
             return {hand:'straight-flush', rank:[sf.rank]}
         }
 
         let fofk = sameValues.filter(v => v.cards.length === 4);
-        console.log('fofk',fofk);
+        //console.log('fofk',fofk);
         if (fofk.length > 0) {
             let rank = this.cards.sort((a,b) => {return b.value - a.value})
                 .find(c => c.value !== fofk.rank);
-            console.log('cards',this.cards);
+            //console.log('cards',this.cards);
             return {hand:'four-of-a-kind', rank:[fofk.value, rank.value]};
         }
 
         let fh = sameValues.filter(s => s.cards.length >= 2)
             .sort((a,b) => {return b.cards.value - a.cards.value})
             .sort((a,b) => {return b.cards.length - a.cards.length});
-        console.log('fh',fh);
+        //console.log('fh',fh);
         if (fh.length >= 2 && fh.find(c => c.cards.length >= 3))
         {
             return {
@@ -81,7 +79,7 @@ export class Hand {
         }
 
         let f = sameSuites.filter(s => s.cards.length >= 5)
-        console.log('f',f);
+        //console.log('f',f);
         if (f.length > 0) {
             var flushCards = f[0].cards;
             flushCards.sort((a,b) => {return b.value - a.value});
@@ -89,34 +87,34 @@ export class Hand {
         }
 
         let s = this.straightEval(this.cards);
-        console.log('s',s);
+        //console.log('s',s);
         if (s.isStraight) {
             return {hand:'straight', rank:[s.rank]};
         }
 
         let tofk = sameValues.filter(v => v.cards.length === 3);
-        console.log('tofk',tofk);
+        //console.log('tofk',tofk);
         if (tofk.length > 0) {
             let rank = this.cards.sort((a,b) => {return b.value - a.value})
                 .find(c => c.value !== tofk.rank);
-            console.log('cards',this.cards);
+            //console.log('cards',this.cards);
             return {hand:'four-of-a-kind', rank:[tofk[0].value, rank.value]};
         }
 
         let pairs = sameValues.filter(v => v.cards.length === 2);
-        console.log('pairs',pairs);
+        //console.log('pairs',pairs);
         if (pairs.length > 0) {
             pairs.sort((a,b) => {return b.value - a.value});
             if (pairs.length > 1)
             {
                 let rank = this.cards.sort((a,b) => {return b.value - a.value})
                     .find(c => c.value !== pairs[0].value && c.value !== pairs[1].value);
-                console.log('cards',this.cards);
+                //console.log('cards',this.cards);
                 return {hand:'two-pair', rank:[pairs[0].value, pairs[1].value, rank.value]}
             } else {
                 let rank = this.cards.sort((a,b) => {return b.value - a.value})
                     .find(c => c.value !== pairs[0]);
-                console.log('cards',this.cards);
+                //console.log('cards',this.cards);
                 return {hand:'pair', rank:[pairs[0].value, rank.value]}
             }
         }

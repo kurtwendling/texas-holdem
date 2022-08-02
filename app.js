@@ -14,9 +14,7 @@ deck.shuffle(30,30);
 let hand = new Hand();
 
 for (var i = 0; i < 7; i++) {
-    let card = deck.cards.pop();
-    deck.dealtCards.push(card);
-    hand.cards.push(card);
+    hand.cards.push(...deck.dealCards());
 }
 
 console.log('hand', hand);

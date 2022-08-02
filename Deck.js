@@ -16,6 +16,19 @@ export class Deck {
         }
     }
 
+    reset() {
+        this.cards.push(...this.dealtCards);
+        this.dealtCards = [];
+        this.shuffle();
+    }
+
+    dealCards(count) {
+        count = count || 1;
+        let cards = this.cards.splice(0, count);
+        this.dealtCards.push(...cards);
+        return cards;
+    }
+
     cutDeck() {
         let firstHalf = this.cards.splice(0, (Math.floor(Math.random() * 26)) + 13);
         this.cards.push(...firstHalf);
